@@ -7,199 +7,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
-    <style>
-    body {
-      color: #404040;
-      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-      margin:0;
-      padding: 0;
-      background: black;
-    }
-
-    h1 { display: none; }
-    h2 { margin: 5px 0; }
-
-    .container {
-      width:280px;
-      padding: 5px 20px;
-      margin-left:auto;
-      margin-right:auto;
-      background: white;
-    }
-
-    #beards:before, #beards:after { content: ""; display: table; }
-    #beards:after { clear: both; }
-    #beards { *zoom: 1; }
-
-    .beard {
-      position: relative;
-      display: block;
-      float: left;
-      width: 80px;
-      height: 80px;
-      border-radius: 10px;
-      margin-left: 20px;
-      margin-top: 15px;
-      background: url(beards.png) top left no-repeat;
-      background-size: 160px 80px;
-    }
-
-    .beard.first { margin-left: 0; }
-    .beard.second { background-position-x: right; }
-
-    /*
-    Badge inspiration:
-    https://github.com/WebInterfaceLab/Snippets/tree/master/4-menu-notifications/
-    */
-    .reset, .count {
-      position: absolute;
-      display: none;
-      top: -9px;
-      line-height: 15px;
-      text-align: center;
-      font-size: 24px;
-      color: #fff;
-      z-index: 1;
-      text-shadow: 0 1px rgba(0, 0, 0, 0.25);
-      border-width: 1px;
-      border-style: solid;
-      border-radius: 30px;
-    }
-    .reset {
-      right: -9px;
-      height: 26px;
-      padding: 11px 10px 0 11px;
-      font-family: Arial, sans-serif;
-      -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
-      -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
-      -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
-      -o-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
-      border-color: #fa5a35;
-      background-color: #fa623f;
-      background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fc9f8a), color-stop(100%, #fa623f));
-      background-image: -webkit-linear-gradient(top, #fc9f8a, #fa623f);
-      background-image: -moz-linear-gradient(top, #fc9f8a, #fa623f);
-      background-image: -ms-linear-gradient(top, #fc9f8a, #fa623f);
-      background-image: -o-linear-gradient(top, #fc9f8a, #fa623f);
-      background-image: linear-gradient(top, #fc9f8a, #fa623f);
-    }
-    .count {
-      font-weight: bold;
-      left: -9px;
-      height: 27px;
-      padding: 9px 12px 0 11px;
-      -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
-      -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
-      -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
-      -o-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px rgba(255, 255, 255, 0.3);
-      border-color: #59ad33;
-      background-color: #77cc51;
-      background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a5dd8c), color-stop(100%, #77cc51));
-      background-image: -webkit-linear-gradient(top, #a5dd8c, #77cc51);
-      background-image: -moz-linear-gradient(top, #a5dd8c, #77cc51);
-      background-image: -ms-linear-gradient(top, #a5dd8c, #77cc51);
-      background-image: -o-linear-gradient(top, #a5dd8c, #77cc51);
-      background-image: linear-gradient(top, #a5dd8c, #77cc51);
-    }
-    .overlay {
-      display: none;
-      width: 94px;
-      height: 94px;
-      background: white;
-      opacity: 0.6;
-    }
-    .name { display: none; }
-
-    .counted .count { display: block; }
-    .counted .reset { display: block; }
-    .counted .overlay { display: block; }
-
-    .submit {
-      margin: 20px 0;
-      background: black;
-      border-radius: 10px;
-      padding: 10px;
-      text-align: center;
-      color: white;
-    }
-    </style>
+    <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script>
-    /**
-     *
-     * NoClickDelay
-     * http://cubiq.org/
-     *
-     */
-    function NoClickDelay(el) {
-      this.element = el;
-      if( window.Touch ) this.element.addEventListener('touchstart', this, false);
-    }
-
-    NoClickDelay.prototype = {
-      handleEvent: function(e) {
-        switch(e.type) {
-          case 'touchstart': this.onTouchStart(e); break;
-          case 'touchmove': this.onTouchMove(e); break;
-          case 'touchend': this.onTouchEnd(e); break;
-        }
-      },
-
-      onTouchStart: function(e) {
-        e.preventDefault();
-        this.moved = false;
-
-        this.element.addEventListener('touchmove', this, false);
-        this.element.addEventListener('touchend', this, false);
-      },
-
-      onTouchMove: function(e) {
-        this.moved = true;
-      },
-
-      onTouchEnd: function(e) {
-        this.element.removeEventListener('touchmove', this, false);
-        this.element.removeEventListener('touchend', this, false);
-
-        if( !this.moved ) {
-          var theTarget = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-          if(theTarget.nodeType == 3) theTarget = theTarget.parentNode;
-
-          var theEvent = document.createEvent('MouseEvents');
-          theEvent.initEvent('click', true, true);
-          theTarget.dispatchEvent(theEvent);
-        }
-      }
-    };
-    $(document).ready(function() {
-      window.scrollTo(0,0);
-      //var theTap = document.getElementById('one');
-      $('.beard').each(function(i, el) {
-        new NoClickDelay(el);
-      });
-
-      $('.beard').click(function() {
-        $(this).addClass('counted');
-        var $count = $('.count', $(this));
-        var value = parseInt($count.html());
-        if (isNaN(value)) {
-          value = 0;
-        }
-        $count.html(value + 1);
-      });
-      $('.reset').click(function() {
-        $(this).parent().removeClass('counted');
-        $(this).siblings('.count').html('');
-        return false;
-      });
-      $('.submit').click(function() {
-        $('.beard').removeClass('counted');
-        $('.count').html('');
-      });
-    });
-    </script>
+    <script type="text/javascript" src="app.js"></script>
   </head>
   <body>
     <div class="container">
@@ -207,58 +17,76 @@
       <h2>How many?</h2>
       <div id="beards" class="clearfix">
         <div id="one" class="beard first">
-          <div class="overlay"></div>
+          <div class="icon">
+            <div class="overlay"></div>
+            <div class="count"></div>
+            <div class="reset">&times;</div>
+          </div>
           <div class="name">Van Dyke</div>
-          <div class="count"></div>
-          <div class="reset">&times;</div>
         </div>
         <div class="beard second">
-          <div class="overlay"></div>
+          <div class="icon">
+            <div class="overlay"></div>
+            <div class="count"></div>
+            <div class="reset">&times;</div>
+          </div>
           <div class="name">Neck Beard</div>
-          <div class="count"></div>
-          <div class="reset">&times;</div>
         </div>
         <div class="beard">
-          <div class="overlay"></div>
+          <div class="icon">
+            <div class="overlay"></div>
+            <div class="count"></div>
+            <div class="reset">&times;</div>
+          </div>
           <div class="name">Pencil Stash</div>
-          <div class="count"></div>
-          <div class="reset">&times;</div>
         </div>
         <div class="beard first second">
-          <div class="overlay"></div>
+          <div class="icon">
+            <div class="overlay"></div>
+            <div class="count"></div>
+            <div class="reset">&times;</div>
+          </div>
           <div class="name">Pencil Stash</div>
-          <div class="count"></div>
-          <div class="reset">&times;</div>
         </div>
         <div class="beard">
-          <div class="overlay"></div>
+          <div class="icon">
+            <div class="overlay"></div>
+            <div class="count"></div>
+            <div class="reset">&times;</div>
+          </div>
           <div class="name">Pencil Stash</div>
-          <div class="count"></div>
-          <div class="reset">&times;</div>
         </div>
         <div class="beard second">
-          <div class="overlay"></div>
+          <div class="icon">
+            <div class="overlay"></div>
+            <div class="count"></div>
+            <div class="reset">&times;</div>
+          </div>
           <div class="name">Pencil Stash</div>
-          <div class="count"></div>
-          <div class="reset">&times;</div>
         </div>
         <div class="beard first">
-          <div class="overlay"></div>
+          <div class="icon">
+            <div class="overlay"></div>
+            <div class="count"></div>
+            <div class="reset">&times;</div>
+          </div>
           <div class="name">Pencil Stash</div>
-          <div class="count"></div>
-          <div class="reset">&times;</div>
         </div>
         <div class="beard second">
-          <div class="overlay"></div>
+          <div class="icon">
+            <div class="overlay"></div>
+            <div class="count"></div>
+            <div class="reset">&times;</div>
+          </div>
           <div class="name">Pencil Stash</div>
-          <div class="count"></div>
-          <div class="reset">&times;</div>
         </div>
         <div class="beard">
-          <div class="overlay"></div>
+          <div class="icon">
+            <div class="overlay"></div>
+            <div class="count"></div>
+            <div class="reset">&times;</div>
+          </div>
           <div class="name">Pencil Stash</div>
-          <div class="count"></div>
-          <div class="reset">&times;</div>
         </div>
       </div>
       <div class="submit">Add to tally</div>
