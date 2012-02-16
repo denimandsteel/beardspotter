@@ -34,7 +34,7 @@ h2 { margin: 5px 0; }
   width: 80px;
   height: 80px;
   border-radius: 10px;
-  background: url(beards.png) top left no-repeat;
+  background: url(images/beards.png) top left no-repeat;
   background-size: 160px 80px;
 }
 

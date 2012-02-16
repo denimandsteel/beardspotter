@@ -12,8 +12,7 @@
   },
   "dependencies": {
     "express": "2.5.1",
-    "hogan.js": "1.0.5-dev",
-    "consolidate": "0.1.0"
+    "express-hogan.js": "0.1.0"
   },
   "devDependencies": {},
   "optionalDependencies": {},
