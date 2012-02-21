@@ -1,6 +1,6 @@
 ## Beardspotting is great
 
-Deploying on Heroku (basically: <http://devcenter.heroku.com/articles/node-js>:
+Deploying on Heroku (basically: <http://devcenter.heroku.com/articles/node-js>):
 
 - $ heroku create --stack cedar
 - $ git push heroku master
