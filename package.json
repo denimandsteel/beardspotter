@@ -11,8 +11,8 @@
     "node": "0.6.10"
   },
   "dependencies": {
-    "express": "2.5.1",
-    "express-hogan.js": "0.1.0"
+    "express": "2.5.1"
+    //"express-hogan.js": "0.1.0"
   },
   "devDependencies": {},
   "optionalDependencies": {},
