@@ -1,77 +1,90 @@
-      <h1>Beardspotter</h1>
-      <h2>How many?</h2>
-      <div id="beards" class="clearfix">
-        <div id="one" class="beard first">
-          <div class="icon">
-            <div class="overlay"></div>
-            <div class="count"></div>
-            <div class="reset">&times;</div>
+      <form action="/sighting" method="post">
+        <h1>Beardspotter</h1>
+        <h2>How many?</h2>
+        <div id="beards" class="clearfix">
+          <input type="hidden" id="latitude" name="location[latitude]" />
+          <input type="hidden" id="longitude" name="location[longitude]" />
+          <div id="one" class="beard first">
+            <div class="icon">
+              <div class="overlay"></div>
+              <div class="count"></div>
+              <input type="hidden" name="beard[van-dyke]" value="0" />
+              <div class="reset">&times;</div>
+            </div>
+            <div class="name">Van Dyke</div>
           </div>
-          <div class="name">Van Dyke</div>
-        </div>
-        <div class="beard second">
-          <div class="icon">
-            <div class="overlay"></div>
-            <div class="count"></div>
-            <div class="reset">&times;</div>
+          <div class="beard second">
+            <div class="icon">
+              <div class="overlay"></div>
+              <div class="count"></div>
+              <input type="hidden" name="beard[neck-beard]" value="0" />
+              <div class="reset">&times;</div>
+            </div>
+            <div class="name">Neck Beard</div>
           </div>
-          <div class="name">Neck Beard</div>
-        </div>
-        <div class="beard">
-          <div class="icon">
-            <div class="overlay"></div>
-            <div class="count"></div>
-            <div class="reset">&times;</div>
+          <div class="beard">
+            <div class="icon">
+              <div class="overlay"></div>
+              <div class="count"></div>
+              <input type="hidden" name="beard[pencil-stash]" value="0" />
+              <div class="reset">&times;</div>
+            </div>
+            <div class="name">Pencil Stash</div>
           </div>
-          <div class="name">Pencil Stash</div>
-        </div>
-        <div class="beard first second">
-          <div class="icon">
-            <div class="overlay"></div>
-            <div class="count"></div>
-            <div class="reset">&times;</div>
+          <div class="beard first second">
+            <div class="icon">
+              <div class="overlay"></div>
+              <div class="count"></div>
+              <input type="hidden" name="pencil-stash" value="0" />
+              <div class="reset">&times;</div>
+            </div>
+            <div class="name">Pencil Stash</div>
           </div>
-          <div class="name">Pencil Stash</div>
-        </div>
-        <div class="beard">
-          <div class="icon">
-            <div class="overlay"></div>
-            <div class="count"></div>
-            <div class="reset">&times;</div>
+          <div class="beard">
+            <div class="icon">
+              <div class="overlay"></div>
+              <div class="count"></div>
+              <input type="hidden" name="pencil-stash" value="0" />
+              <div class="reset">&times;</div>
+            </div>
+            <div class="name">Pencil Stash</div>
           </div>
-          <div class="name">Pencil Stash</div>
-        </div>
-        <div class="beard second">
-          <div class="icon">
-            <div class="overlay"></div>
-            <div class="count"></div>
-            <div class="reset">&times;</div>
+          <div class="beard second">
+            <div class="icon">
+              <div class="overlay"></div>
+              <div class="count"></div>
+              <input type="hidden" name="pencil-stash" value="0" />
+              <div class="reset">&times;</div>
+            </div>
+            <div class="name">Pencil Stash</div>
           </div>
-          <div class="name">Pencil Stash</div>
-        </div>
-        <div class="beard first">
-          <div class="icon">
-            <div class="overlay"></div>
-            <div class="count"></div>
-            <div class="reset">&times;</div>
+          <div class="beard first">
+            <div class="icon">
+              <div class="overlay"></div>
+              <div class="count"></div>
+              <input type="hidden" name="pencil-stash" value="0" />
+              <div class="reset">&times;</div>
+            </div>
+            <div class="name">Pencil Stash</div>
           </div>
-          <div class="name">Pencil Stash</div>
-        </div>
-        <div class="beard second">
-          <div class="icon">
-            <div class="overlay"></div>
-            <div class="count"></div>
-            <div class="reset">&times;</div>
+          <div class="beard second">
+            <div class="icon">
+              <div class="overlay"></div>
+              <div class="count"></div>
+              <input type="hidden" name="pencil-stash" value="0" />
+              <div class="reset">&times;</div>
+            </div>
+            <div class="name">Pencil Stash</div>
           </div>
-          <div class="name">Pencil Stash</div>
-        </div>
-        <div class="beard">
-          <div class="icon">
-            <div class="overlay"></div>
-            <div class="count"></div>
-            <div class="reset">&times;</div>
+          <div class="beard">
+            <div class="icon">
+              <div class="overlay"></div>
+              <div class="count"></div>
+              <input type="hidden" name="pencil-stash" value="0" />
+              <div class="reset">&times;</div>
+            </div>
+            <div class="name">Pencil Stash</div>
           </div>
-          <div class="name">Pencil Stash</div>
         </div>
-      </div>
-      <div class="submit">Report these beards</div>
+        <input type="submit" class="submit" value="Report these beards" />
+      </form>

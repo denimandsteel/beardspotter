@@ -47,27 +47,26 @@ NoClickDelay.prototype = {
 
 $(document).ready(function() {
   window.scrollTo(0,0);
-  //var theTap = document.getElementById('one');
-  $('.beard').each(function(i, el) {
-    new NoClickDelay(el);
-  });
-
   $('.beard').click(function() {
     $(this).addClass('counted');
-    var $count = $('.count', $(this));
-    var value = parseInt($count.html());
-    if (isNaN(value)) {
-      value = 0;
-    }
-    $count.html(value + 1);
+    var $input = $('input', $(this));
+    var value = parseInt($input.val()) + 1;
+    $input.val(value);
+    $('.count', $(this)).html(value);
+  }).each(function(i, el) {
+    new NoClickDelay(el);
   });
   $('.reset').click(function() {
-    $(this).parent().parent().removeClass('counted');
+    $(this).parents('.beard').removeClass('counted');
     $(this).siblings('.count').html('');
+    $(this).siblings('input').val(0);
     return false;
   });
-  $('.submit').click(function() {
-    $('.beard').removeClass('counted');
-    $('.count').html('');
-  });
 });
+
+if (navigator.geolocation) {
+  navigator.geolocation.watchPosition(function(position) {
+    $('#latitude').val(position.coords.latitude);
+    $('#longitude').val(position.coords.longitude);
+  });
+}
