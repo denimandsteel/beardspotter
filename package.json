@@ -2,7 +2,7 @@
   "author": "Tylor Sherman <tylor@denimandsteel.com> (http://denimandsteel.com)",
   "name": "beardspotter",
   "description": "Beards are everywhere",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/denimandsteel/beardspotter.git"
@@ -11,7 +11,7 @@
     "node": "0.6.10"
   },
   "dependencies": {
-    "express": "2.5.1"
+    "express": "2.2.0"
   },
   "devDependencies": {},
   "optionalDependencies": {},
