@@ -8,7 +8,7 @@
     "url": "git://github.com/denimandsteel/beardspotter.git"
   },
   "engines": {
-    "node": "~0.6.10"
+    "node": "0.6.10"
   },
   "dependencies": {
     "express": "2.5.1",
