@@ -5,6 +5,8 @@ Deploying on Heroku (basically: <http://devcenter.heroku.com/articles/node-js>):
 - $ heroku create --stack cedar
 - $ git push heroku master
 - $ heroku ps:scale web=1
+- $ heroku addons:add shared-database
+- $ heroku run node schema.js
 - $ heroku open
 
 Lots to do:

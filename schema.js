@@ -4,8 +4,7 @@ var connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhos
 var client = new pg.Client(connectionString);
 client.connect();
 
-client.query("CREATE TABLE...;", function(err, result) {
-});
-
-client.query("CREATE TABLE...;", function(err, result) {
+client.query("create table sighting(id serial, ip character varying, posted timestamp without time zone, latitude character varying, longitude character varying, beards character varying)").on('end', function(){
+  console.log('Created sighting table.')
+  client.end();
 });

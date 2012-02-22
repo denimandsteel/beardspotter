@@ -5,8 +5,8 @@ var app = module.exports = express.createServer();
 var pg = require('pg').native;
 var connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/beardspotter'
 
-//var client = new pg.Client(connectionString);
-//client.connect();
+var client = new pg.Client(connectionString);
+client.connect();
 
 // or connect on demand, client.connect(function(client...){ .. client.query(->); });
 
