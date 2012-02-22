@@ -1,5 +1,5 @@
 var express = require('express');
-var expressHogan = require('express-hogan.js');
+var ejs = require('ejs');
 var app = module.exports = express.createServer();
 
 var pg = require('pg').native;
@@ -8,11 +8,7 @@ var connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhos
 var client = new pg.Client(connectionString);
 client.connect();
 
-// or connect on demand, client.connect(function(client...){ .. client.query(->); });
-
-app.register('.html', expressHogan);
-app.set('view engine', 'html');
-app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
 
 app.configure('development', function(){
   app.use(express.static(__dirname + '/public', { maxAge: 31557600000 })); /* One year */
@@ -24,15 +20,22 @@ app.get('/', function(req, res){
 });
 
 app.get('/sighting', function(req, res) {
-  returnSighting(req, res);
+  var query = client.query('SELECT * FROM sighting ORDER BY posted DESC LIMIT 20');
+  var sightings = [];
+  query.on('row', function(row) {
+    row.beards = JSON.parse(row.beards);
+    sightings.push(row);
+  });
+  query.on('end', function() {
+    res.render('sighting', {
+      locals: {
+        sightings: sightings
+      }
+    });
+  });
 });
 
 app.post('/sighting', function(req, res) {
-  // Take care of post, redirect to get.
-  returnSighting(req, res);
-});
-
-var returnSighting = function(req, res) {
   var location = null;
   var total = 0;
 
@@ -41,14 +44,25 @@ var returnSighting = function(req, res) {
   }
   if (req.body.location && req.body.location.latitude && req.body.location.longitude) {
     location = req.body.location;
-   }
-  res.render('sighting', {
-    locals: {
-      total: total,
-      location: location
-    }
+  }
+  // TODO: Sanitize first.
+  client.query('INSERT INTO sighting (ip, posted, latitude, longitude, beards) VALUES($1, $2, $3, $4, $5)', [req.connection.remoteAddress, new Date(), req.body.location.latitude, req.body.location.longitude, req.body.beard]);
+  var query = client.query('SELECT * FROM sighting ORDER BY posted DESC LIMIT 20');
+  var sightings = [];
+  query.on('row', function(row) {
+    row.beards = JSON.parse(row.beards);
+    sightings.push(row);
   });
-}
+  query.on('end', function() {
+    res.render('sighting', {
+      locals: {
+        total: total,
+        location: location,
+        sightings: sightings
+      }
+    });
+  });
+});
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {

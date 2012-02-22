@@ -1,0 +1,13 @@
+<% if(typeof total !== 'undefined') { %>
+<h2>You reported <span class="total"><%= total %></span> beards.</h2>
+<% } else { %>
+<h2>Recent beards</h2>
+<% } %>
+<% for (var i = 0; i < sightings.length; i++) { %>
+  <% for (var beard in sightings[i].beards) { %>
+    <%= beard %> <%= sightings[i].beards[beard] %><br />
+  <% } %>
+  <!--<%= sightings[i].latitude %>
+  <%= sightings[i].longitude %>-->
+  <br />
+<% } %>
