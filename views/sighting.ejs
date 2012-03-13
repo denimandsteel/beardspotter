@@ -1,7 +1,8 @@
 <% if(typeof total !== 'undefined') { %>
-<h2>You reported <span class="total"><%= total %></span> beards.</h2>
+<h2 class="highlight">Good Work</h2>
+<h3>You reported <span class="total"><%= total %></span> beards.</h3>
 <% } else { %>
-<h2>Recent beards</h2>
+<h2 class="highlight">Sightings</h2>
 <% } %>
 <% for (var i = 0; i < sightings.length; i++) { %>
   <% for (var beard in sightings[i].beards) { %>

@@ -15,7 +15,7 @@ h2 {
   text-align: center;
   /*color: #FFE400;*/
 }
-h2#how-many {
+h2.highlight {
   background: transparent url(images/line.png) center 14px no-repeat;
 }
 
