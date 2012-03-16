@@ -45,8 +45,14 @@ NoClickDelay.prototype = {
   }
 };
 
+window.scrollTo(0,0);
+if (
+  ("standalone" in window.navigator) &&
+  window.navigator.standalone
+  ){
+  $('body').addClass('web-app');
+}
 $(document).ready(function() {
-  window.scrollTo(0,0);
   $('.beard').click(function() {
     $(this).addClass('counted');
     var $input = $('input', $(this));

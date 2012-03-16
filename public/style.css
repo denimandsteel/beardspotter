@@ -4,6 +4,7 @@ body {
   text-transform: uppercase;
   margin: 0;
   padding: 0;
+  /* CC BY-ND: http://www.flickr.com/photos/mustafakhayat/6276850011/ */
   background: #000000 url(images/barber.jpg) center top no-repeat;
   background-size: 735px 490px;
   background-attachment:fixed;
@@ -15,21 +16,23 @@ h2 {
   text-align: center;
   /*color: #FFE400;*/
 }
+.web-app h2 {
+  margin: 10px 0 15px 0;
+}
+
 h2.highlight {
   background: transparent url(images/line.png) center 14px no-repeat;
 }
 
 .container {
   width:280px;
-  padding: 5px 20px;
+  padding: 0px 20px;
   margin-left:auto;
   margin-right:auto;
 }
-
-/* Yep it's a clearfix */
-#beards:before, #beards:after { content: ""; display: table; }
-#beards:after { clear: both; }
-#beards { *zoom: 1; }
+.web-app .container {
+  padding: 5px 20px;
+}
 
 .beard {
   float:left;
@@ -38,24 +41,44 @@ h2.highlight {
   margin-left: 20px;
 }
 .beard .name {
+  line-height: 10px;
   padding: 0 0 5px;
   font-size: 11px;
   font-family: Times New Roman;
   text-transform: none;
 }
+.web-app .beard .name {
+  padding: 0 0 10px;
+}
+
 .beard .icon {
   position: relative;
   display: inline-block;
   width: 80px;
   height: 80px;
   border-radius: 10px;
+  /* Based on http://www.shutterstock.com/pic-82772641/stock-vector-illustration-with-men-beard-collection-isolated-on-grey-background.html */
   background: rgba(0,0,0, 0.3) url(images/all-the-beards.png) top left no-repeat;
   background-size: 720px 160px;
 }
+
 .beard.counted .icon {
-  background: rgba(0,0,0, 1) url(images/all-the-beards.png) bottom left no-repeat;
+  background: rgba(0,0,0, 0.7) url(images/all-the-beards.png) bottom left no-repeat;
   background-size: 720px 160px;
 }
+
+/*
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  .beard .icon {
+    background: rgba(0,0,0, 0.3) url(images/all-the-beards.png) top left no-repeat;
+    background-size: 720px 160px;
+  }
+  .beard.counted .icon {
+    background: rgba(0,0,0, 1) url(images/all-the-beards.png) bottom left no-repeat;
+    background-size: 720px 160px;
+  }
+}
+*/
 
 #one.beard .icon { background-position: 0px top; }
 #one.beard.counted .icon { background-position: 0px bottom; }
@@ -79,10 +102,7 @@ h2.highlight {
 .beard.first { margin-left: 0; }
 .beard .name { font-size: 12px; }
 
-/*
-Badge inspiration:
-https://github.com/WebInterfaceLab/Snippets/tree/master/4-menu-notifications/
-*/
+/* Badge inspiration: https://github.com/WebInterfaceLab/Snippets/tree/master/4-menu-notifications/ */
 .reset, .count {
   position: absolute;
   display: none;
@@ -135,18 +155,37 @@ https://github.com/WebInterfaceLab/Snippets/tree/master/4-menu-notifications/
   background-image: -o-linear-gradient(top, #a5dd8c, #77cc51);
   background-image: linear-gradient(top, #a5dd8c, #77cc51);
 }
-/*
-.overlay {
-  display: none;
-  width: 80px;
-  height: 80px;
-  background: white;
-  opacity: 0.6;
-}*/
 
 .counted .count { display: block; }
 .counted .reset { display: block; }
-.counted .overlay { display: block; }
+
+#sightings {
+  height: 180px;
+  overflow-y: scroll;
+}
+.sighting {
+  margin: 15px 0;
+}
+.sighting .beard {
+  float: none;
+  display: inline-block;
+  width: 40px;
+  margin-left: 11px;
+}
+.sighting .icon {
+  width: 40px;
+  height: 40px;
+  background-size: 360px 80px;
+}
+.sighting .count {
+  display: block;
+  left: -11px;
+  height: 17px;
+  padding: 5px 8px 0 7px;
+  line-height: 8px;
+  font-size: 14px;
+  top: -7px;
+}
 
 .submit {
   margin: 20px 0;
@@ -160,4 +199,27 @@ https://github.com/WebInterfaceLab/Snippets/tree/master/4-menu-notifications/
   width: 100%;
   -webkit-appearance: none;
   font-size: 18px;
+}
+
+#map {
+  border-radius: 10px;
+  background: rgba(0,0,0, 0.3) url(images/map.png) top left no-repeat;
+  background-size: 280px 280px;
+  width: 280px;
+  height: 200px;
+  position: relative;
+  /*border-radius: 10px;*/
+  /*border: 1px solid #fff;*/
+}
+
+.marker {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 10px;
+  background: #FFE400;
+  /* opacity: 0.5; */
+  /*
+  box-shadow: 1px 1px 3px #000;
+  */
 }

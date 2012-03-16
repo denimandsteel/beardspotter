@@ -1,14 +1,70 @@
 <% if(typeof total !== 'undefined') { %>
 <h2 class="highlight">Good Work</h2>
-<h3>You reported <span class="total"><%= total %></span> beards.</h3>
+<h3>You reported <span class="total"><%= total %></span> <% if (total === 1) { %>beard<% } else { %>beards<% } %>.</h3>
 <% } else { %>
 <h2 class="highlight">Sightings</h2>
 <% } %>
+<div id="map">
 <% for (var i = 0; i < sightings.length; i++) { %>
-  <% for (var beard in sightings[i].beards) { %>
-    <%= beard %> <%= sightings[i].beards[beard] %><br />
+  <% if (sightings[i].latitude != '' && sightings[i].longitude != '') { %>
+  <div class="marker" data-lat="<%= sightings[i].latitude %>" data-lon="<%= sightings[i].longitude %>"></div>
   <% } %>
-  <!--<%= sightings[i].latitude %>
-  <%= sightings[i].longitude %>-->
-  <br />
 <% } %>
+</div>
+<div id="sightings">
+<% for (var i = 0; i < sightings.length; i++) { %>
+  <div class="sighting">
+  <% for (var beard in sightings[i].beards) { %>
+    <% if (sightings[i].beards[beard] > 0) { %>
+    <div id="<%= beard %>" class="beard">
+      <div class="icon">
+        <div class="count"><%= sightings[i].beards[beard] %></div>
+      </div>
+    </div>
+    <% } %>
+  <% } %>
+  </div>
+<% } %>
+</div>
+<script src="/modestmaps.min.js"></script>
+<script src="/modestmaps.markers.js"></script>
+<script>
+window.scrollTo(0,0);
+var markers = document.getElementsByClassName('marker');
+var imageXOffSet = 0;
+var imageYOffSet = 0;
+var imageWidth = 280;
+var imageHeight = 280;
+var YPixelsToRadiansRatio = (imageHeight) / (2 * Math.PI);
+
+/* With help from:
+   - http://stackoverflow.com/questions/2651099/convert-long-lat-to-pixel-x-y-on-a-given-picure
+   - http://mathworld.wolfram.com/MercatorProjection.html
+   - https://github.com/mapbox/node-sphericalmercator/blob/b900d1ea7a6ca656d3c85c3bfb4f0fe625bfd4bf/sphericalmercator.js#L43
+*/
+
+var latToPixels = function(lat) {
+  var f = Math.sin(lat * (Math.PI / 180));
+  return ((imageHeight / 2) + 0.5 * Math.log((1 + f) / (1 - f)) * -1 * YPixelsToRadiansRatio) + imageYOffSet
+}
+
+var lonToPixels = function(lon) {
+  return (((lon + 180) / 360) * imageWidth) + imageXOffSet
+}
+
+for (var i = 0; i < markers.length; i++) {
+  markers[i].style.top  = latToPixels(parseFloat(markers[i].dataset.lat)) + 'px';
+  markers[i].style.left = lonToPixels(parseFloat(markers[i].dataset.lon)) + 'px';
+}
+
+
+/*
+var provider = new MM.TemplatedMapProvider('http://10.0.1.25:20008/tile/beards/{Z}/{X}/{Y}.png?updated=1331844595000');
+var map = new MM.Map('map', provider, new MM.Point(280, 250));
+map.setCenterZoom(new MM.Location(49.18608,-122.91170), 1);
+map.setZoomRange(0, 10);
+
+markers = new MM.MarkerLayer();
+map.addLayer(markers);
+*/
+</script>
