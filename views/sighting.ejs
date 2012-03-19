@@ -15,6 +15,7 @@
 </div>
 <div id="sightings">
 <% for (var i = 0; i < sightings.length; i++) { %>
+  <% if (typeof sightings[i].beards === 'object') { %>
   <div id="sighting-<%= sightings[i].id %>" class="sighting<% if (i === 0){ %> highlight<% } %>">
   <% for (var beard in sightings[i].beards) { %>
     <% if (sightings[i].beards[beard] > 0) { %>
@@ -26,6 +27,7 @@
     <% } %>
   <% } %>
   </div>
+  <% } %>
 <% } %>
 </div>
 <script src="/modestmaps.min.js"></script>
@@ -102,61 +104,60 @@ for (var i = 0; i < markers.length; i++) {
 
 var sightings = document.getElementById('sightings');
 var sighting = document.getElementsByClassName('sighting');
-var currentSighting = 0;
-
-sightings.addEventListener('scroll', testScroll, false);
-//sightings.addEventListener("touchmove", testScroll, false);
-
-document.getElementById('previous').addEventListener('click', function() {
-  currentSighting--;
-  sightings.scrollTop = reverseOffset(sighting[currentSighting]);
-}, false);
+var activeIndex = 0;
+var debounce = false;
 
 new NoClickDelay(document.getElementById('next'));
 new NoClickDelay(document.getElementById('previous'));
 
-document.getElementById('next').addEventListener('click', function() {
-  currentSighting++;
-  sightings.scrollTop = reverseOffset(sighting[currentSighting]);
+document.getElementById('previous').addEventListener('click', function() {
+  if (activeIndex > 0) {
+    activeIndex--;
+  }
+  sightings.scrollTop = (activeIndex / (sighting.length - 2)) * (sightings.scrollHeight - sightings.clientHeight);
+  debounce = true;
+  highlight();
 }, false);
 
-function forwardOffset(el) {
-  var percentScrolled = el.scrollTop/(el.scrollHeight - el.clientHeight);
-  return el.scrollTop + el.offsetTop + ((percentScrolled*el.offsetHeight+25)/2);
-}
+document.getElementById('next').addEventListener('click', function() {
+  if (activeIndex < sighting.length - 1) {
+    activeIndex++;
+  }
+  sightings.scrollTop = (activeIndex / (sighting.length - 2)) * (sightings.scrollHeight - sightings.clientHeight);
+  debounce = true;
+  highlight();
+}, false);
 
-function reverseOffset(el) {
-  //var percentScrolled = (el.offsetTop - sightings.offsetTop) / sightings.scrollHeight;
+sightings.addEventListener('scroll', testScroll, false);
+sightings.addEventListener("touchmove", testScroll, false);
 
-  //console.log(percentage);
-  /*
-  var percentScrolled = el.scrollTop/(el.scrollHeight - el.clientHeight);
-  console.log(percentScrolled);
-  */
-  return 0;
-}
+var highlighted = sightings.getElementsByClassName('highlight')[0];
+var highlightedMarker = document.getElementById(highlighted.id + '-marker');
 
 function testScroll() {
-  /* Allow chosen sighting to drift from top to bottom based on percentage scrolled. Adjust 25px as works best.  */
-  var filter = forwardOffset(this);
-  for (var i = 0; i < sighting.length; i++) {
-    if (sighting[i].offsetTop >= filter &&
-        sighting[i].offsetTop < (filter + sighting[i].offsetHeight/* + 15*/) /* Padding accounts for 15px */
-    ) {
-      currentSighting = i;
-      sighting[i].classList.add('highlight');
-      var marker = document.getElementById(sighting[i].id + '-marker');
-      if (marker !== null) {
-        marker.classList.add('highlight');
-      }
-    }
-    else {
-      sighting[i].classList.remove('highlight');
-      var marker = document.getElementById(sighting[i].id + '-marker');
-      if (marker !== null) {
-        marker.classList.remove('highlight');
-      }
-    }
+  var percentScrolled = this.scrollTop / (this.scrollHeight - this.clientHeight);
+  var length = sighting.length - 1;
+  activeIndex = Math.min(Math.max(Math.floor(percentScrolled * length), 0), length);
+  if (debounce === true) {
+    debounce = false;
+  }
+  else {
+    highlight();
+  }
+}
+
+function highlight() {
+  highlighted.classList.remove('highlight')
+  if (highlightedMarker !== null) {
+    highlightedMarker.classList.remove('highlight');
+  }
+
+  highlighted = sighting[activeIndex]; // Pass the baton.
+  highlightedMarker = document.getElementById(highlighted.id + '-marker');
+
+  highlighted.classList.add('highlight');
+  if (highlightedMarker !== null) {
+    highlightedMarker.classList.add('highlight');
   }
 }
 
