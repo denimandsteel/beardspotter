@@ -159,34 +159,6 @@ h2.highlight {
 .counted .count { display: block; }
 .counted .reset { display: block; }
 
-#sightings {
-  height: 180px;
-  overflow-y: scroll;
-}
-.sighting {
-  margin: 15px 0;
-}
-.sighting .beard {
-  float: none;
-  display: inline-block;
-  width: 40px;
-  margin-left: 11px;
-}
-.sighting .icon {
-  width: 40px;
-  height: 40px;
-  background-size: 360px 80px;
-}
-.sighting .count {
-  display: block;
-  left: -11px;
-  height: 17px;
-  padding: 5px 8px 0 7px;
-  line-height: 8px;
-  font-size: 14px;
-  top: -7px;
-}
-
 .submit {
   margin: 20px 0;
   background: rgba(0,0,0, 0.3);
@@ -202,11 +174,10 @@ h2.highlight {
 }
 
 #map {
-  border-radius: 10px;
-  background: rgba(0,0,0, 0.3) url(images/map.png) top left no-repeat;
+  background: transparent url(images/map.png) top left no-repeat;
   background-size: 280px 280px;
   width: 280px;
-  height: 200px;
+  height: 150px;
   position: relative;
   /*border-radius: 10px;*/
   /*border: 1px solid #fff;*/
@@ -222,4 +193,112 @@ h2.highlight {
   /*
   box-shadow: 1px 1px 3px #000;
   */
+}
+.marker.highlight {
+  background: red;
+  z-index: 1;
+}
+/*
+.marker.highlight .pulse {
+  width: 20px;
+  height: 20px;
+  display: block;
+  position: absolute;
+  top: -9px;
+  left: -9px;
+  border: 1px solid #000;
+  border-radius: 50px;
+  box-shadow: 0 0 5px #ccc;
+
+  /* Set up animation
+  -webkit-animation-name: pulse;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-timing-function: ease-out;
+
+  /* Final state
+  -webkit-transform: scale(2.5);
+  -moz-transform: scale(2.5);
+  transform: scale(2.5);
+  opacity: 0;
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-transform: scale(0.3);
+        transform: scale(0.3);
+        opacity: 0.8;
+    }
+    80% {
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: scale(2.5);
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+*/
+
+@-webkit-keyframes previous-reveal {
+  0%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+#previous, #next {
+  width: 100px;
+  height: 150px;
+  background: rgba(100,0,0, 0.5);
+  position: absolute;
+  -webkit-animation: previous-reveal 2s 1 ease-in-out;
+  opacity: 0;
+}
+#previous {
+  top: 0;
+  left: 0;
+}
+#next {
+  top: 0;
+  right: 0;
+}
+
+#sightings {
+  height: 200px;
+  overflow-y: scroll;
+  border-radius: 10px;
+  background: rgba(0,0,0, 0.3);
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.sighting {
+  /*margin: 15px 0;*/
+}
+.sighting.highlight {
+  background: #000;
+}
+.sighting .beard {
+  float: none;
+  display: inline-block;
+  width: 40px;
+  margin-left: 11px;
+}
+.sighting .icon {
+  width: 40px;
+  height: 40px;
+  background-size: 360px 80px;
+  background-color: #000;
+}
+.sighting.highlight .icon {
+  background-position-y: bottom;
+}
+.sighting .count {
+  display: block;
+  left: -11px;
+  height: 17px;
+  padding: 5px 8px 0 7px;
+  line-height: 8px;
+  font-size: 14px;
+  top: -7px;
 }

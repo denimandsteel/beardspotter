@@ -7,20 +7,22 @@
 <div id="map">
 <% for (var i = 0; i < sightings.length; i++) { %>
   <% if (sightings[i].latitude != '' && sightings[i].longitude != '') { %>
-  <div class="marker" data-lat="<%= sightings[i].latitude %>" data-lon="<%= sightings[i].longitude %>"></div>
+  <div id="sighting-<%= sightings[i].id %>-marker" class="marker" data-lat="<%= sightings[i].latitude %>" data-lon="<%= sightings[i].longitude %>"><div class="pulse"></div></div>
   <% } %>
 <% } %>
+  <div id="previous"></div>
+  <div id="next"></div>
 </div>
 <div id="sightings">
 <% for (var i = 0; i < sightings.length; i++) { %>
-  <div class="sighting">
+  <div id="sighting-<%= sightings[i].id %>" class="sighting<% if (i === 0){ %> highlight<% } %>">
   <% for (var beard in sightings[i].beards) { %>
     <% if (sightings[i].beards[beard] > 0) { %>
     <div id="<%= beard %>" class="beard">
       <div class="icon">
-        <div class="count"><%= sightings[i].beards[beard] %></div>
+        <!--<div class="count"><%= sightings[i].beards[beard] %></div>-->
       </div>
-    </div>
+    </div><%= sightings[i].beards[beard] %>
     <% } %>
   <% } %>
   </div>
@@ -29,6 +31,47 @@
 <script src="/modestmaps.min.js"></script>
 <script src="/modestmaps.markers.js"></script>
 <script>
+function NoClickDelay(el) {
+  this.element = el;
+  if( window.Touch ) this.element.addEventListener('touchstart', this, false);
+}
+
+NoClickDelay.prototype = {
+  handleEvent: function(e) {
+    switch(e.type) {
+      case 'touchstart': this.onTouchStart(e); break;
+      case 'touchmove': this.onTouchMove(e); break;
+      case 'touchend': this.onTouchEnd(e); break;
+    }
+  },
+
+  onTouchStart: function(e) {
+    e.preventDefault();
+    this.moved = false;
+
+    this.element.addEventListener('touchmove', this, false);
+    this.element.addEventListener('touchend', this, false);
+  },
+
+  onTouchMove: function(e) {
+    this.moved = true;
+  },
+
+  onTouchEnd: function(e) {
+    this.element.removeEventListener('touchmove', this, false);
+    this.element.removeEventListener('touchend', this, false);
+
+    if( !this.moved ) {
+      var theTarget = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+      if(theTarget.nodeType == 3) theTarget = theTarget.parentNode;
+
+      var theEvent = document.createEvent('MouseEvents');
+      theEvent.initEvent('click', true, true);
+      theTarget.dispatchEvent(theEvent);
+    }
+  }
+};
+
 window.scrollTo(0,0);
 var markers = document.getElementsByClassName('marker');
 var imageXOffSet = 0;
@@ -57,6 +100,65 @@ for (var i = 0; i < markers.length; i++) {
   markers[i].style.left = lonToPixels(parseFloat(markers[i].dataset.lon)) + 'px';
 }
 
+var sightings = document.getElementById('sightings');
+var sighting = document.getElementsByClassName('sighting');
+var currentSighting = 0;
+
+sightings.addEventListener('scroll', testScroll, false);
+//sightings.addEventListener("touchmove", testScroll, false);
+
+document.getElementById('previous').addEventListener('click', function() {
+  currentSighting--;
+  sightings.scrollTop = reverseOffset(sighting[currentSighting]);
+}, false);
+
+new NoClickDelay(document.getElementById('next'));
+new NoClickDelay(document.getElementById('previous'));
+
+document.getElementById('next').addEventListener('click', function() {
+  currentSighting++;
+  sightings.scrollTop = reverseOffset(sighting[currentSighting]);
+}, false);
+
+function forwardOffset(el) {
+  var percentScrolled = el.scrollTop/(el.scrollHeight - el.clientHeight);
+  return el.scrollTop + el.offsetTop + ((percentScrolled*el.offsetHeight+25)/2);
+}
+
+function reverseOffset(el) {
+  //var percentScrolled = (el.offsetTop - sightings.offsetTop) / sightings.scrollHeight;
+
+  //console.log(percentage);
+  /*
+  var percentScrolled = el.scrollTop/(el.scrollHeight - el.clientHeight);
+  console.log(percentScrolled);
+  */
+  return 0;
+}
+
+function testScroll() {
+  /* Allow chosen sighting to drift from top to bottom based on percentage scrolled. Adjust 25px as works best.  */
+  var filter = forwardOffset(this);
+  for (var i = 0; i < sighting.length; i++) {
+    if (sighting[i].offsetTop >= filter &&
+        sighting[i].offsetTop < (filter + sighting[i].offsetHeight/* + 15*/) /* Padding accounts for 15px */
+    ) {
+      currentSighting = i;
+      sighting[i].classList.add('highlight');
+      var marker = document.getElementById(sighting[i].id + '-marker');
+      if (marker !== null) {
+        marker.classList.add('highlight');
+      }
+    }
+    else {
+      sighting[i].classList.remove('highlight');
+      var marker = document.getElementById(sighting[i].id + '-marker');
+      if (marker !== null) {
+        marker.classList.remove('highlight');
+      }
+    }
+  }
+}
 
 /*
 var provider = new MM.TemplatedMapProvider('http://10.0.1.25:20008/tile/beards/{Z}/{X}/{Y}.png?updated=1331844595000');
