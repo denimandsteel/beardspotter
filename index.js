@@ -24,7 +24,14 @@ app.get('/sighting', function(req, res) {
   var sightings = [];
   query.on('row', function(row) {
     row.beards = JSON.parse(row.beards);
-    sightings.push(row);
+    // Dirty way to make sure we don't get empty rows.
+    // Should clean this up on input.
+    for (var i in row.beards) {
+      if (row.beards.hasOwnProperty(i) && row.beards[i] > 0) {
+        sightings.push(row);
+        break;
+      }
+    }
   });
   query.on('end', function() {
     res.render('sighting', {
@@ -38,6 +45,11 @@ app.get('/sighting', function(req, res) {
 app.post('/sighting', function(req, res) {
   var location = null;
   var total = 0;
+  var accepted = [
+    'van-dyke',
+    'neck-beard',
+    'pencil-stash'
+  ];
 
   for (var key in req.body.beard) {
     total += parseInt(req.body.beard[key]);
@@ -45,13 +57,22 @@ app.post('/sighting', function(req, res) {
   if (req.body.location && req.body.location.latitude && req.body.location.longitude) {
     location = req.body.location;
   }
-  // TODO: Sanitize first.
-  client.query('INSERT INTO sighting (ip, posted, latitude, longitude, beards) VALUES($1, $2, $3, $4, $5)', [req.connection.remoteAddress, new Date(), req.body.location.latitude, req.body.location.longitude, req.body.beard]);
+  if (total > 0) {
+    // TODO: Sanitize first.
+    client.query('INSERT INTO sighting (ip, posted, latitude, longitude, beards) VALUES($1, $2, $3, $4, $5)', [req.connection.remoteAddress, new Date(), req.body.location.latitude, req.body.location.longitude, req.body.beard]);
+  }
   var query = client.query('SELECT * FROM sighting ORDER BY posted DESC LIMIT 20');
   var sightings = [];
   query.on('row', function(row) {
     row.beards = JSON.parse(row.beards);
-    sightings.push(row);
+    // Dirty way to make sure we don't get empty rows.
+    // Should clean this up on input.
+    for (var i in row.beards) {
+      if (row.beards.hasOwnProperty(i) && row.beards[i] > 0) {
+        sightings.push(row);
+        break;
+      }
+    }
   });
   query.on('end', function() {
     res.render('sighting', {
