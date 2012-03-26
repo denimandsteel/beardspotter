@@ -252,7 +252,7 @@ h2.highlight {
   height: 150px;
   background: rgba(100,0,0, 0.5);
   position: absolute;
-  -webkit-animation: previous-reveal 2s 1 ease-in-out;
+  /*-webkit-animation: previous-reveal 2s 1 ease-in-out;*/
   opacity: 0;
 }
 #previous {
