@@ -13,25 +13,34 @@
   <div id="previous"></div>
   <div id="next"></div>
 </div>
-<div id="sightings">
-<% for (var i = 0; i < sightings.length; i++) { %>
-  <% if (typeof sightings[i].beards === 'object') { %>
-  <div id="sighting-<%= sightings[i].id %>" class="sighting<% if (i === 0){ %> highlight<% } %>">
-  <% for (var beard in sightings[i].beards) { %>
-    <% if (sightings[i].beards[beard] > 0) { %>
-    <div id="<%= beard %>" class="beard">
-      <div class="icon">
-        <!--<div class="count"><%= sightings[i].beards[beard] %></div>-->
-      </div>
-    </div><%= sightings[i].beards[beard] %>
-    <% } %>
-  <% } %>
+<div id="sightings" class="flexslider-container">
+  <div class="flexslider">
+    <ul class="slides">
+      <% for (var i = 0; i < sightings.length; i++) { %>
+      <% if (typeof sightings[i].beards === 'object') { %>
+      <li id="sighting-<%= sightings[i].id %>" class="sighting<% if (i === 0){ %> highlight<% } %>">
+        <% for (var beard in sightings[i].beards) { %>
+          <% if (sightings[i].beards[beard] > 0) { %>
+          <div id="<%= beard %>" class="beard">
+            <div class="icon">
+              <!--<div class="count"><%= sightings[i].beards[beard] %></div>-->
+            </div>
+          </div><%= sightings[i].beards[beard] %>
+          <% } %>
+        <% } %>
+        <p><%= sightings[i].id %></p>
+      </li>
+      <% } %>
+      <% } %>
+    </ul>
   </div>
-  <% } %>
-<% } %>
 </div>
 <script src="/modestmaps.min.js"></script>
 <script src="/modestmaps.markers.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="/jquery.flexslider-min.js"></script>
+<link href="/flexslider.css" media="screen" rel="stylesheet" type="text/css" />
+
 <script>
 function NoClickDelay(el) {
   this.element = el;
@@ -110,7 +119,7 @@ var debounce = false;
 new NoClickDelay(document.getElementById('next'));
 new NoClickDelay(document.getElementById('previous'));
 
-document.getElementById('previous').addEventListener('click', function() {
+/*document.getElementById('previous').addEventListener('click', function() {
   if (activeIndex > 0) {
     activeIndex--;
   }
@@ -127,8 +136,9 @@ document.getElementById('next').addEventListener('click', function() {
   debounce = true;
   highlight();
 }, false);
+*/
 
-sightings.addEventListener('scroll', testScroll, false);
+/*sightings.addEventListener('scroll', testScroll, false);
 sightings.addEventListener("touchmove", testScroll, false);
 
 var highlighted = sightings.getElementsByClassName('highlight')[0];
@@ -160,7 +170,7 @@ function highlight() {
     highlightedMarker.classList.add('highlight');
   }
 }
-
+*/
 /*
 var provider = new MM.TemplatedMapProvider('http://10.0.1.25:20008/tile/beards/{Z}/{X}/{Y}.png?updated=1331844595000');
 var map = new MM.Map('map', provider, new MM.Point(280, 250));
@@ -170,4 +180,14 @@ map.setZoomRange(0, 10);
 markers = new MM.MarkerLayer();
 map.addLayer(markers);
 */
+
+$(window).load(function() {
+  $('.flexslider').flexslider({
+    animation: "slide",
+    slideshow: false,
+    controlNav: false,
+    directionNav: false,
+    controlsContainer: ".flexslider-container"
+  });
+});
 </script>

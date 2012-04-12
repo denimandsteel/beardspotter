@@ -177,7 +177,7 @@ h2.highlight {
   background: transparent url(images/map.png) top left no-repeat;
   background-size: 280px 280px;
   width: 280px;
-  height: 150px;
+  height: 200px;
   position: relative;
   /*border-radius: 10px;*/
   /*border: 1px solid #fff;*/
@@ -265,16 +265,22 @@ h2.highlight {
 }
 
 #sightings {
-  height: 200px;
+  /*height: 200px;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch; /* Woo! */
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
   border-radius: 10px;
   background: rgba(0,0,0, 0.3);
   margin-bottom: 10px;
   margin-top: 10px;
 }
+.wrap { /* width: 5600px; /* 20 * 280px */ }
 .sighting {
   /*margin: 15px 0;*/
+  width: 280px;
+  height: 100px;
+  /*display: inline-block;*/
 }
 .sighting.highlight {
   background: #000;
@@ -303,3 +309,9 @@ h2.highlight {
   font-size: 14px;
   top: -7px;
 }
+
+.flexslider {
+  background: transparent !important;
+  border: 0 !important;
+}
+.flex-direction-nav li a { background: red !important; }
