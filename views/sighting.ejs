@@ -18,7 +18,7 @@
     <ul class="slides">
       <% for (var i = 0; i < sightings.length; i++) { %>
       <% if (typeof sightings[i].beards === 'object') { %>
-      <li id="sighting-<%= sightings[i].id %>" class="sighting<% if (i === 0){ %> highlight<% } %>">
+      <li id="sighting-<%= sightings[i].id %>" class="sighting">
         <% for (var beard in sightings[i].beards) { %>
           <% if (sightings[i].beards[beard] > 0) { %>
           <div id="<%= beard %>" class="beard">
@@ -187,7 +187,14 @@ $(window).load(function() {
     slideshow: false,
     controlNav: false,
     directionNav: false,
-    controlsContainer: ".flexslider-container"
+    animationDuration: 80,
+    animationLoop: false,
+    controlsContainer: ".flexslider-container",
+    after: function(slider) {
+      // Highlight currently viewed slide on map.
+      $('#map .marker.highlight').removeClass('highlight');
+      $('#' + slider.slides.eq(slider.currentSlide).attr('id') + '-marker').addClass('highlight');;
+    }
   });
   window.scrollTo(0,0);
 });
