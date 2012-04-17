@@ -1,77 +1,78 @@
+    <div class="container">
       <form action="/sighting" method="post">
         <h1>Beardspotter</h1>
         <h2 class="highlight">How many?</h2>
         <div id="beards" class="clearfix">
           <input type="hidden" id="latitude" name="location[latitude]" />
           <input type="hidden" id="longitude" name="location[longitude]" />
-          <div id="one" class="beard first">
+          <div id="old-goat" class="beard first">
+            <div class="icon">
+              <div class="count"></div>
+              <input type="hidden" name="beard[old-goat]" value="0" />
+              <div class="reset">&times;</div>
+            </div>
+            <div class="name">Old Goat</div>
+          </div>
+          <div id="full" class="beard second">
+            <div class="icon">
+              <div class="count"></div>
+              <input type="hidden" name="beard[full]" value="0" />
+              <div class="reset">&times;</div>
+            </div>
+            <div class="name">Full</div>
+          </div>
+          <div id="van-dyke" class="beard">
             <div class="icon">
               <div class="count"></div>
               <input type="hidden" name="beard[van-dyke]" value="0" />
               <div class="reset">&times;</div>
             </div>
-            <div class="name">Old Goat</div>
-          </div>
-          <div id="two" class="beard second">
-            <div class="icon">
-              <div class="count"></div>
-              <input type="hidden" name="beard[neck-beard]" value="0" />
-              <div class="reset">&times;</div>
-            </div>
-            <div class="name">Full</div>
-          </div>
-          <div id="three" class="beard">
-            <div class="icon">
-              <div class="count"></div>
-              <input type="hidden" name="beard[pencil-stash]" value="0" />
-              <div class="reset">&times;</div>
-            </div>
             <div class="name">Van Dyke</div>
           </div>
-          <div id="four" class="beard first second">
+          <div id="van-winkle" class="beard first second">
             <div class="icon">
               <div class="count"></div>
-              <input type="hidden" name="pencil-stash" value="0" />
+              <input type="hidden" name="beard[van-winkle]" value="0" />
               <div class="reset">&times;</div>
             </div>
-            <div class="name">Full Busse</div>
+            <div class="name">Van Winkle</div>
           </div>
-          <div id="five" class="beard">
+          <div id="goatee" class="beard">
             <div class="icon">
               <div class="count"></div>
-              <input type="hidden" name="pencil-stash" value="0" />
+              <input type="hidden" name="beard[goatee]" value="0" />
               <div class="reset">&times;</div>
             </div>
             <div class="name">Goatee</div>
           </div>
-          <div id="six" class="beard second">
+          <div id="chops" class="beard second">
             <div class="icon">
               <div class="count"></div>
-              <input type="hidden" name="pencil-stash" value="0" />
+              <input type="hidden" name="beard[chops]" value="0" />
               <div class="reset">&times;</div>
             </div>
-            <div class="name">Mutton Chops</div>
+            <div class="name">Chops</div>
           </div>
-          <div id="seven" class="beard first">
+          <div id="dapper" class="beard first">
             <div class="icon">
               <div class="count"></div>
-              <input type="hidden" name="pencil-stash" value="0" />
+              <input type="hidden" name="beard[dapper]" value="0" />
               <div class="reset">&times;</div>
             </div>
             <div class="name">Dapper</div>
           </div>
-          <div id="eight" class="beard second">
+          <div id="chin-strap" class="beard second">
             <div class="icon">
               <div class="count"></div>
-              <input type="hidden" name="pencil-stash" value="0" />
+              <input type="hidden" name="beard[chin-strap]" value="0" />
               <div class="reset">&times;</div>
             </div>
             <div class="name">Chin Strap</div>
           </div>
-          <div id="nine" class="beard">
+          <div id="dad" class="beard">
             <div class="icon">
               <div class="count"></div>
-              <input type="hidden" name="pencil-stash" value="0" />
+              <input type="hidden" name="beard[dad]" value="0" />
               <div class="reset">&times;</div>
             </div>
             <div class="name">Dad</div>
@@ -81,4 +82,5 @@
       </form>
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
       <script type="text/javascript" src="app.js"></script>
+    </div>
 

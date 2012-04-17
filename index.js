@@ -34,9 +34,21 @@ app.get('/sighting', function(req, res) {
     }
   });
   query.on('end', function() {
+    var humanReadable = {
+      'old-goat': 'Old Goat',
+      'full': 'Full',
+      'van-dyke': 'Van Dyke',
+      'van-winkle': 'Van Winkle',
+      'goatee': 'Goatee',
+      'chops': 'Chops',
+      'dapper': 'Dapper',
+      'chin-strap': 'Chin Strap',
+      'dad': 'Dad'
+    };
     res.render('sighting', {
       locals: {
-        sightings: sightings
+        sightings: sightings,
+        humanReadable: humanReadable
       }
     });
   });
@@ -46,20 +58,31 @@ app.post('/sighting', function(req, res) {
   var location = null;
   var total = 0;
   var accepted = [
+    'old-goat',
+    'full',
     'van-dyke',
-    'neck-beard',
-    'pencil-stash'
+    'van-winkle',
+    'goatee',
+    'chops',
+    'dapper',
+    'chin-strap',
+    'dad'
   ];
+  var beards = {};
 
   for (var key in req.body.beard) {
-    total += parseInt(req.body.beard[key]);
+    console.log(accepted.indexOf(key) + ': ' + req.body.beard[key]);
+    if (accepted.indexOf(key) >= 0 && parseInt(req.body.beard[key]) > 0) {
+      total += parseInt(req.body.beard[key]);
+      beards[key] = parseInt(req.body.beard[key]);
+    }
   }
   if (req.body.location && req.body.location.latitude && req.body.location.longitude) {
     location = req.body.location;
   }
   if (total > 0) {
     // TODO: Sanitize first.
-    client.query('INSERT INTO sighting (ip, posted, latitude, longitude, beards) VALUES($1, $2, $3, $4, $5)', [req.connection.remoteAddress, new Date(), req.body.location.latitude, req.body.location.longitude, req.body.beard]);
+    client.query('INSERT INTO sighting (ip, posted, latitude, longitude, beards) VALUES($1, $2, $3, $4, $5)', [req.connection.remoteAddress, new Date(), req.body.location.latitude, req.body.location.longitude, beards]);
   }
   var query = client.query('SELECT * FROM sighting ORDER BY posted DESC LIMIT 20');
   var sightings = [];
@@ -75,11 +98,23 @@ app.post('/sighting', function(req, res) {
     }
   });
   query.on('end', function() {
+    var humanReadable = {
+      'old-goat': 'Old Goat',
+      'full': 'Full',
+      'van-dyke': 'Van Dyke',
+      'van-winkle': 'Van Winkle',
+      'goatee': 'Goatee',
+      'chops': 'Chops',
+      'dapper': 'Dapper',
+      'chin-strap': 'Chin Strap',
+      'dad': 'Dad'
+    };
     res.render('sighting', {
       locals: {
         total: total,
         location: location,
-        sightings: sightings
+        sightings: sightings,
+        humanReadable: humanReadable
       }
     });
   });

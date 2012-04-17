@@ -1,17 +1,17 @@
-<% if(typeof total !== 'undefined') { %>
-<h2 class="highlight">Good Work</h2>
-<h3>You reported <span class="total"><%= total %></span> <% if (total === 1) { %>beard<% } else { %>beards<% } %>.</h3>
-<% } else { %>
-<h2 class="highlight">Sightings</h2>
-<% } %>
-<div id="map">
-<% for (var i = 0; i < sightings.length; i++) { %>
-  <% if (sightings[i].latitude != '' && sightings[i].longitude != '') { %>
-  <div id="sighting-<%= sightings[i].id %>-marker" class="marker<% if (i === 0){ %> highlight<% } %>" data-lat="<%= sightings[i].latitude %>" data-lon="<%= sightings[i].longitude %>"><div class="pulse"></div></div>
+<div class="container">
+  <% if(typeof total !== 'undefined') { %>
+  <h2 class="highlight">Good Work</h2>
+  <h3>You reported <span class="total"><%= total %></span> <% if (total === 1) { %>beard<% } else { %>beards<% } %>.</h3>
+  <% } else { %>
+  <h2 class="highlight">Sightings</h2>
   <% } %>
-<% } %>
-  <div id="previous"></div>
-  <div id="next"></div>
+  <div id="map">
+  <% for (var i = 0; i < sightings.length; i++) { %>
+    <% if (sightings[i].latitude != '' && sightings[i].longitude != '') { %>
+    <div id="sighting-<%= sightings[i].id %>-marker" class="marker<% if (i === 0){ %> highlight<% } %>" data-lat="<%= sightings[i].latitude %>" data-lon="<%= sightings[i].longitude %>"><div class="pulse"></div></div>
+    <% } %>
+  <% } %>
+  </div>
 </div>
 <div id="sightings" class="flexslider-container">
   <div class="flexslider">
@@ -19,27 +19,34 @@
       <% for (var i = 0; i < sightings.length; i++) { %>
       <% if (typeof sightings[i].beards === 'object') { %>
       <li id="sighting-<%= sightings[i].id %>" class="sighting">
-        <% for (var beard in sightings[i].beards) { %>
-          <% if (sightings[i].beards[beard] > 0) { %>
-          <div id="<%= beard %>" class="beard">
-            <div class="icon">
-              <!--<div class="count"><%= sightings[i].beards[beard] %></div>-->
+        <div class="sighting-wrap">
+          <% for (var beard in sightings[i].beards) { %>
+            <% if (sightings[i].beards[beard] > 0) { %>
+            <div id="<%= beard %>" class="beard">
+              <div class="icon">
+                <div class="count"><%= sightings[i].beards[beard] %></div>
+              </div>
+              <div class="name"><%= humanReadable[beard] %></div>
             </div>
-          </div><%= sightings[i].beards[beard] %>
+            <% } %>
           <% } %>
-        <% } %>
-        <p><%= sightings[i].id %></p>
+          <div class="meta">
+            <div><strong>Near</strong> <%= sightings[i].latitude %>, <%= sightings[i].longitude %></div>
+            <% var date = new Date(sightings[i].posted); %>
+            <div><strong>At</strong> <%= date.getHours() %>:<%= (date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes())  %> <strong>on</strong> <%= date.getDate() %>/<%= date.getMonth() + 1 %>/<%= date.getFullYear() %></div>
+          </div>
+        </div>
       </li>
       <% } %>
       <% } %>
     </ul>
   </div>
 </div>
+
 <script src="/modestmaps.min.js"></script>
 <script src="/modestmaps.markers.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="/jquery.flexslider-min.js"></script>
-<link href="/flexslider.css" media="screen" rel="stylesheet" type="text/css" />
 
 <script>
 function NoClickDelay(el) {
@@ -83,7 +90,6 @@ NoClickDelay.prototype = {
   }
 };
 
-//window.scrollTo(0,0);
 var markers = document.getElementsByClassName('marker');
 var imageXOffSet = 0;
 var imageYOffSet = 0;
@@ -111,76 +117,6 @@ for (var i = 0; i < markers.length; i++) {
   markers[i].style.left = lonToPixels(parseFloat(markers[i].dataset.lon)) + 'px';
 }
 
-var sightings = document.getElementById('sightings');
-var sighting = document.getElementsByClassName('sighting');
-var activeIndex = 0;
-var debounce = false;
-
-new NoClickDelay(document.getElementById('next'));
-new NoClickDelay(document.getElementById('previous'));
-
-/*document.getElementById('previous').addEventListener('click', function() {
-  if (activeIndex > 0) {
-    activeIndex--;
-  }
-  sightings.scrollTop = (activeIndex / (sighting.length - 2)) * (sightings.scrollHeight - sightings.clientHeight);
-  debounce = true;
-  highlight();
-}, false);
-
-document.getElementById('next').addEventListener('click', function() {
-  if (activeIndex < sighting.length - 1) {
-    activeIndex++;
-  }
-  sightings.scrollTop = (activeIndex / (sighting.length - 2)) * (sightings.scrollHeight - sightings.clientHeight);
-  debounce = true;
-  highlight();
-}, false);
-*/
-
-/*sightings.addEventListener('scroll', testScroll, false);
-sightings.addEventListener("touchmove", testScroll, false);
-
-var highlighted = sightings.getElementsByClassName('highlight')[0];
-var highlightedMarker = document.getElementById(highlighted.id + '-marker');
-
-function testScroll() {
-  var percentScrolled = this.scrollTop / (this.scrollHeight - this.clientHeight);
-  var length = sighting.length - 1;
-  activeIndex = Math.min(Math.max(Math.floor(percentScrolled * length), 0), length);
-  if (debounce === true) {
-    debounce = false;
-  }
-  else {
-    highlight();
-  }
-}
-
-function highlight() {
-  highlighted.classList.remove('highlight')
-  if (highlightedMarker !== null) {
-    highlightedMarker.classList.remove('highlight');
-  }
-
-  highlighted = sighting[activeIndex]; // Pass the baton.
-  highlightedMarker = document.getElementById(highlighted.id + '-marker');
-
-  highlighted.classList.add('highlight');
-  if (highlightedMarker !== null) {
-    highlightedMarker.classList.add('highlight');
-  }
-}
-*/
-/*
-var provider = new MM.TemplatedMapProvider('http://10.0.1.25:20008/tile/beards/{Z}/{X}/{Y}.png?updated=1331844595000');
-var map = new MM.Map('map', provider, new MM.Point(280, 250));
-map.setCenterZoom(new MM.Location(49.18608,-122.91170), 1);
-map.setZoomRange(0, 10);
-
-markers = new MM.MarkerLayer();
-map.addLayer(markers);
-*/
-
 $(window).load(function() {
   $('.flexslider').flexslider({
     animation: "slide",
@@ -195,7 +131,9 @@ $(window).load(function() {
       $('#map .marker.highlight').removeClass('highlight');
       $('#' + slider.slides.eq(slider.currentSlide).attr('id') + '-marker').addClass('highlight');;
     }
+  }).load(function() {
+    window.scrollTo(0,0);
+    alert('hi');
   });
-  window.scrollTo(0,0);
 });
 </script>
