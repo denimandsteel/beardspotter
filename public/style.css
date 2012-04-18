@@ -190,12 +190,14 @@ h2.highlight {
 }
 
 .submit {
+  cursor: pointer;
+  text-decoration: none;
   margin: 5px 0 0px;
   background: rgba(0,0,0, 0.3);
   /*border-radius: 10px;*/
   border-radius: 0;
   border: 1px solid #FFE400;
-  padding: 5px;
+  padding: 5px 0;
   text-align: center;
   color: white;
   width: 100%;
@@ -206,6 +208,11 @@ h2.highlight {
 .web-app .submit {
   margin: 20px 0;
   padding: 10px;
+}
+
+#four-oh-four { text-align: center; text-transform: none; }
+#four-oh-four .submit {
+  display: block;
 }
 
 #map {

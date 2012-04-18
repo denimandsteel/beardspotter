@@ -11,9 +11,17 @@ client.connect();
 
 app.set('view engine', 'ejs');
 
-app.configure('development', function(){
+app.configure('production', function(){
+  app.use(express.favicon(__dirname + '/public/favicon.ico'));
   app.use(express.static(__dirname + '/public', { maxAge: 31557600000 })); /* One year */
   app.use(express.bodyParser());
+});
+
+app.configure('development', function(){
+  app.use(express.favicon(__dirname + '/public/favicon.ico'));
+  app.use(express.static(__dirname + '/public', { maxAge: 31557600000 })); /* One year */
+  app.use(express.bodyParser());
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 app.get('/', function(req, res){
@@ -119,6 +127,11 @@ app.post('/sighting', function(req, res) {
       }
     });
   });
+});
+
+// 404.
+app.get('/*', function(req, res){
+  res.render('404', {status: 404 });
 });
 
 var port = process.env.PORT || 3000;
