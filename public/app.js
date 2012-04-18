@@ -80,7 +80,7 @@ if (
   ){
   $('body').addClass('web-app');
 }
-if (navigator.geolocation) {
+if ($('#latitude').length > 0 && $('#longitude').length > 0 && navigator.geolocation) {
   navigator.geolocation.watchPosition(function(position) {
     $('#latitude').val(position.coords.latitude);
     $('#longitude').val(position.coords.longitude);
