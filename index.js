@@ -162,7 +162,7 @@ app.get('/*', function(req, res){
   res.render('404', {status: 404 });
 });
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 4000;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });

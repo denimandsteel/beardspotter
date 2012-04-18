@@ -257,6 +257,10 @@ h2.highlight {
   -webkit-animation-duration: 1s;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: ease-out;
+  -moz-animation-name: pulse;
+  -moz-animation-duration: 1s;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: ease-out;
 }
 
 @-webkit-keyframes pulse {
@@ -272,6 +276,23 @@ h2.highlight {
     }
     100% {
         -webkit-transform: scale(2.5);
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+@-moz-keyframes pulse {
+    0% {
+        -moz-transform: scale(0.3);
+        transform: scale(0.3);
+        opacity: 0.8;
+    }
+    80% {
+        -moz-transform: scale(1.5);
+        transform: scale(1.5);
+        opacity: 0;
+    }
+    100% {
+        -moz-transform: scale(2.5);
         transform: scale(2.5);
         opacity: 0;
     }

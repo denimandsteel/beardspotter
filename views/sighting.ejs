@@ -34,7 +34,9 @@
             <% if (sightings[i].nickname != '') { %>
             <div><strong>Spotted by</strong> <%= sightings[i].nickname %></div>
             <% } %>
+            <% if (sightings[i].latitude != 'NaN' && sightings[i].latitude != 'NaN') { %>
             <div><strong>Near</strong> <%= parseFloat(sightings[i].latitude).toFixed(2) %>, <%= parseFloat(sightings[i].longitude).toFixed(2) %></div>
+            <% } %>
             <% var date = new Date(sightings[i].posted); %>
             <div><strong>At</strong> <%= date.getHours() %>:<%= (date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes())  %> <strong>on</strong> <%= date.getDate() %>/<%= date.getMonth() + 1 %>/<%= date.getFullYear() %></div>
           </div>
