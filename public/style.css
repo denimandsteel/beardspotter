@@ -12,12 +12,14 @@ body {
 
 h1 { display: none; }
 h2 {
-  margin: 5px 0;
+  margin: 0 0 3px;
   text-align: center;
+  line-height: 24px;
   /*color: #FFE400;*/
 }
 .web-app h2 {
   margin: 10px 0 15px 0;
+  line-height: 1em;
 }
 
 h2.highlight {
@@ -41,13 +43,14 @@ h2.highlight {
   margin-left: 20px;
 }
 .beard .name, .sighting .meta {
-  line-height: 10px;
-  padding: 0 0 5px;
+  line-height: 3px;
+  padding: 0 0 7px;
   font-size: 11px;
   font-family: "Times New Roman", Times, sans-serif;
   text-transform: none;
 }
 .web-app .beard .name {
+  line-height: 10px;
   padding: 0 0 10px;
 }
 
@@ -187,17 +190,22 @@ h2.highlight {
 }
 
 .submit {
-  margin: 20px 0;
+  margin: 5px 0 0px;
   background: rgba(0,0,0, 0.3);
   /*border-radius: 10px;*/
   border-radius: 0;
   border: 1px solid #FFE400;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
   color: white;
   width: 100%;
   -webkit-appearance: none;
   font-size: 18px;
+}
+
+.web-app .submit {
+  margin: 20px 0;
+  padding: 10px;
 }
 
 #map {
