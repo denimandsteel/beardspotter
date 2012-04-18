@@ -21,6 +21,7 @@ Then you can deploy on Heroku (basically: <http://devcenter.heroku.com/articles/
 - $ heroku run node schema.js
 - $ heroku open
 
+<<<<<<< HEAD
 ## To Do
 
 - intersitial for identity
@@ -33,3 +34,10 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+=======
+## Acknowledgements
+The background photo on the main page is derived from http://www.flickr.com/photos/omaromar/2063335787/sizes/l/in/photostream/ by Omar Omar. The Creative Commons license for this photo can be viewed at http://creativecommons.org/licenses/by/2.0/
+
+Additional design assistance from Angela Rabideau.
+
+>>>>>>> Acknowledgements
