@@ -121,33 +121,6 @@ $(document).ready(function() {
     return true;
   });
 
-  var markers = document.getElementsByClassName('marker');
-  var imageXOffSet = 0;
-  var imageYOffSet = 0;
-  var imageWidth = 280;
-  var imageHeight = 280;
-  var YPixelsToRadiansRatio = (imageHeight) / (2 * Math.PI);
-
-  /* With help from:
-     - http://stackoverflow.com/questions/2651099/convert-long-lat-to-pixel-x-y-on-a-given-picure
-     - http://mathworld.wolfram.com/MercatorProjection.html
-     - https://github.com/mapbox/node-sphericalmercator/blob/b900d1ea7a6ca656d3c85c3bfb4f0fe625bfd4bf/sphericalmercator.js#L43
-  */
-
-  var latToPixels = function(lat) {
-    var f = Math.sin(lat * (Math.PI / 180));
-    return ((imageHeight / 2) + 0.5 * Math.log((1 + f) / (1 - f)) * -1 * YPixelsToRadiansRatio) + imageYOffSet
-  }
-
-  var lonToPixels = function(lon) {
-    return (((lon + 180) / 360) * imageWidth) + imageXOffSet
-  }
-
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].style.top  = latToPixels(parseFloat(markers[i].dataset.lat)) + 'px';
-    markers[i].style.left = lonToPixels(parseFloat(markers[i].dataset.lon)) + 'px';
-  }
-
   $('.flexslider').flexslider({
     animation: "slide",
     slideshow: false,

@@ -9,6 +9,26 @@ var connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhos
 var client = new pg.Client(connectionString);
 client.connect();
 
+var imageXOffSet = 0;
+var imageYOffSet = 0;
+var imageWidth = 280;
+var imageHeight = 280;
+var YPixelsToRadiansRatio = (imageHeight) / (2 * Math.PI);
+
+/* With help from:
+   - http://stackoverflow.com/questions/2651099/convert-long-lat-to-pixel-x-y-on-a-given-picure
+   - http://mathworld.wolfram.com/MercatorProjection.html
+   - https://github.com/mapbox/node-sphericalmercator/blob/b900d1ea7a6ca656d3c85c3bfb4f0fe625bfd4bf/sphericalmercator.js#L43
+*/
+var latToPixels = function(lat) {
+  var f = Math.sin(lat * (Math.PI / 180));
+  return ((imageHeight / 2) + 0.5 * Math.log((1 + f) / (1 - f)) * -1 * YPixelsToRadiansRatio) + imageYOffSet
+}
+
+var lonToPixels = function(lon) {
+  return (((lon + 180) / 360) * imageWidth) + imageXOffSet
+}
+
 app.set('view engine', 'ejs');
 
 app.configure('production', function(){
@@ -37,6 +57,10 @@ app.get('/sighting', function(req, res) {
     // Should clean this up on input.
     for (var i in row.beards) {
       if (row.beards.hasOwnProperty(i) && row.beards[i] > 0) {
+        if (row.latitude !== null && row.longitude !== null) {
+          row.top = latToPixels(parseFloat(row.latitude));
+          row.left = lonToPixels(parseFloat(row.longitude));
+        }
         sightings.push(row);
         break;
       }
