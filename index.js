@@ -57,7 +57,7 @@ app.get('/sighting', function(req, res) {
     // Should clean this up on input.
     for (var i in row.beards) {
       if (row.beards.hasOwnProperty(i) && row.beards[i] > 0) {
-        if (row.latitude !== null && row.longitude !== null) {
+        if (row.latitude != '' && row.longitude != '') {
           row.top = latToPixels(parseFloat(row.latitude));
           row.left = lonToPixels(parseFloat(row.longitude));
         }
@@ -125,6 +125,10 @@ app.post('/sighting', function(req, res) {
     // Should clean this up on input.
     for (var i in row.beards) {
       if (row.beards.hasOwnProperty(i) && row.beards[i] > 0) {
+        if (row.latitude != '' && row.longitude != '') {
+          row.top = latToPixels(parseFloat(row.latitude));
+          row.left = lonToPixels(parseFloat(row.longitude));
+        }
         sightings.push(row);
         break;
       }

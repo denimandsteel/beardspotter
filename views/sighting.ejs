@@ -7,7 +7,7 @@
   <% } %>
   <div id="map">
   <% for (var i = 0; i < sightings.length; i++) { %>
-    <% if (sightings[i].latitude != '' && sightings[i].longitude != '') { %>
+    <% if (sightings[i].top && sightings[i].left) { %>
     <div id="sighting-<%= sightings[i].id %>-marker" class="marker<% if (i === 0){ %> highlight<% } %>" style="top: <%= sightings[i].top %>px; left: <%= sightings[i].left %>px;"><div class="pulse"></div></div>
     <% } %>
   <% } %>
