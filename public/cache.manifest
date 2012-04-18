@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# v0.0.3 - April 18, 2012
+# v0.0.4 - April 18, 2012
 
 CACHE:
 /
@@ -8,8 +8,9 @@ app.js
 images/barber.jpg
 images/line.png
 images/all-the-beards.png
+images/map.png
 apple-touch-icon-precomposed.png
 splash-screen-640x920.png
 
 NETWORK:
-/sighting
+sighting
