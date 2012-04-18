@@ -4,7 +4,15 @@
 Beardspotter is a fun single-page mobile web app that we cooked up to play with design for casual social and geo-location features. We solved a number of real problems with our little toy, and have made the code open source for you to learn from and reuse. If you use it, be a sport and throw us a credit at @denimandsteel or [denimandsteel.com](http://denimandsteel.com)
 
 ## Installation
-Deploying on Heroku (basically: <http://devcenter.heroku.com/articles/node-js>):
+Setting up on your local, make sure you install [node.js](https://github.com/joyent/node/wiki/Installation) and [PostgreSQL](http://www.postgresql.org/download/):
+
+- $ git clone git@github.com:denimandsteel/beardspotter.git
+- $ cd beardspotter
+- $ createdb beardspotter # create database in PostgreSQL
+- $ node schema.js # create schema
+- $ node index.js
+
+Then you can deploy on Heroku (basically: <http://devcenter.heroku.com/articles/node-js>):
 
 - $ heroku create --stack cedar
 - $ git push heroku master

@@ -176,6 +176,16 @@ h2.highlight {
 .counted .count { display: block; }
 .counted .reset { display: block; }
 
+#identity {
+  text-transform: none;
+  display: none;
+}
+#identity input[type='text'] {
+  width: 174px;
+  font-size: 20px;
+  margin-left: 3px;
+}
+
 .submit {
   margin: 20px 0;
   background: rgba(0,0,0, 0.3);

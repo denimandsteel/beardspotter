@@ -1,6 +1,7 @@
 var express = require('express');
 var ejs = require('ejs');
 var app = module.exports = express.createServer();
+var sanitize = require('validator').sanitize;
 
 var pg = require('pg').native;
 var connectionString = process.env.DATABASE_URL || 'postgres://postgres@localhost:5432/beardspotter'
@@ -71,7 +72,6 @@ app.post('/sighting', function(req, res) {
   var beards = {};
 
   for (var key in req.body.beard) {
-    console.log(accepted.indexOf(key) + ': ' + req.body.beard[key]);
     if (accepted.indexOf(key) >= 0 && parseInt(req.body.beard[key]) > 0) {
       total += parseInt(req.body.beard[key]);
       beards[key] = parseInt(req.body.beard[key]);
@@ -81,10 +81,10 @@ app.post('/sighting', function(req, res) {
     location = req.body.location;
   }
   if (total > 0) {
-    // TODO: Sanitize first.
-    client.query('INSERT INTO sighting (ip, posted, latitude, longitude, beards) VALUES($1, $2, $3, $4, $5)', [req.connection.remoteAddress, new Date(), req.body.location.latitude, req.body.location.longitude, beards]);
+    var placename = ''; // Reverse geocode: http://maps.google.com/maps/api/geocode/json?latlng=49.5,-70.5&sensor=false
+    client.query('INSERT INTO sighting (ip, posted, nickname, placename, latitude, longitude, beards) VALUES($1, $2, $3, $4, $5, $6, $7)', [req.connection.remoteAddress, new Date(), sanitize(req.body.nickname).xss(), sanitize(placename).xss(), sanitize(location.latitude).toFloat(), sanitize(location.longitude).toFloat(), beards]);
   }
-  var query = client.query('SELECT * FROM sighting ORDER BY posted DESC LIMIT 20');
+  var query = client.query('SELECT * FROM sighting ORDER BY posted DESC');
   var sightings = [];
   query.on('row', function(row) {
     row.beards = JSON.parse(row.beards);

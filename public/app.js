@@ -69,6 +69,15 @@ $(document).ready(function() {
     $(this).siblings('input').val(0);
     return false;
   });
+
+  $('#submit-beards').click(function() {
+    if($('#nickname').val() == '') {
+      $('#beards').hide();
+      $('#identity').show();
+      $('#nickname').focus();
+      return false;
+    }
+  });
 });
 
 if (navigator.geolocation) {
