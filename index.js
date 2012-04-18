@@ -56,7 +56,7 @@ app.get('/sighting', function(req, res) {
 });
 
 app.post('/sighting', function(req, res) {
-  var location = null;
+  var location = { latitude: null, longitude: null };
   var total = 0;
   var accepted = [
     'old-goat',
@@ -78,7 +78,8 @@ app.post('/sighting', function(req, res) {
     }
   }
   if (req.body.location && req.body.location.latitude && req.body.location.longitude) {
-    location = req.body.location;
+    location.latitude = req.body.location.latitude;
+    location.longitude = req.body.location.longitude;
   }
   if (total > 0) {
     var placename = ''; // Reverse geocode: http://maps.google.com/maps/api/geocode/json?latlng=49.5,-70.5&sensor=false
