@@ -6,7 +6,7 @@ Beardspotter is a fun single-page mobile web app that we cooked up to play with 
 ## Installation
 Setting up on your local, make sure you install [node.js](https://github.com/joyent/node/wiki/Installation) and [PostgreSQL](http://www.postgresql.org/download/):
 
-- $ git clone git@github.com:denimandsteel/beardspotter.git
+- $ git clone https://github.com/denimandsteel/beardspotter.git
 - $ cd beardspotter
 - $ createdb beardspotter # create database in PostgreSQL
 - $ node schema.js # create schema
