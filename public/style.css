@@ -307,7 +307,8 @@ h2.highlight {
   margin: 0 10px;
   padding-top: 10px;
   border-radius: 7px;
-  background: rgba(255,255,255, 0.2);
+  background: rgba(0,0,0, 0.35);
+
 }
 .wrap { /* width: 5600px; /* 20 * 280px */ }
 .sighting {
